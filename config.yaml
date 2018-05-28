@@ -1,5 +1,5 @@
 ---
-# OpenStack version allow: Pike, Queen, Ocata. Default: Pike
+# OpenStack version allow: pike, queen, ocata. Default: pike
 openstack_branch_version:
 # The folder to store download pkgs. Default: /root/tripleo_repo
 local_repo_folder:

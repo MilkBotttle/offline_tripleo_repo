@@ -1,0 +1,15 @@
+---
+# OpenStack version allow: pike, queen, ocata. Default: pike
+openstack_branch_version: pike
+# The folder to store download pkgs. Default: /root/tripleo_repo
+local_repo_folder: /root/tripleo_repo
+# Create the http_service for remote host use. Default: False
+create_http_service: False
+# Create the local_repo files, if enable http_service create remote_files. Default: True
+create_repo_file: True
+# Repofile name
+repofilename: "openstack_{{ openstack_branch_version }}.repo"
+# Repofile place path
+yum_repod: "/etc/yum.repos.d/{{ repofilename }}"
+# repo server ip
+repo_server: 192.168.24.1 

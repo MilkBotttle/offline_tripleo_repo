@@ -1,0 +1,28 @@
+---
+- name: Ensure install createrepo
+  yum:
+    name: createrepo
+  register: task_output
+  ignore_errors: True
+  tags: create_repo
+
+- name: Initial local repo script
+  template:
+    src: templates/local_repo.sh.j2
+    des: /tmp/local_repo.sh
+    mode: 0755
+  tags: create_repo
+
+- name: Initial remote repo script
+  template:
+    src: templates/remote_repo.sh.j2
+    des: /tmp/remote_repo.sh 
+    mode: 0755
+  tags: create_repo
+
+- name: Create repo file
+  script: "{{ item }}"
+  with_items:
+    - /tmp/local_repo.sh
+    - /tmp/remote_repo.sh
+  tags: create_repo

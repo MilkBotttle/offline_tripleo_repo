@@ -1,0 +1,17 @@
+#!/bin/sh
+
+REPODIR="{{ local_repo_folder }}"
+REPOFILE="{{ yum_repod }}"
+rm $REPOFILE 2> /dev/null
+touch $REPOFILE
+
+for DIR in `find $REPODIR -maxdepth 1 -mindepth 1 -type d`; do  
+    echo -e "[`basename $DIR`]" >> $REPOFILE
+    echo -e "name=`basename $DIR`" >> $REPOFILE
+    echo -e "baseurl=file://$REPODIR/`basename $DIR`/" >> $REPOFILE
+    echo -e "enabled=1" >> $REPOFILE
+    echo -e "gpgcheck=1" >> $REPOFILE
+    echo -e "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release" >> $REPOFILE
+    echo -e "\n" >> $REPOFILE
+done;
+

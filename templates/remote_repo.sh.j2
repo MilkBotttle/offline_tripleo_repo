@@ -1,0 +1,19 @@
+#!/bin/sh
+
+REPOFILE="{{ local_repo_folder }}"
+ADDRESS="{{ repo_server }}"
+
+rm $REPOFILE 2> /dev/null
+touch $REPOFILE
+
+for DIR in `find /httpboot/osprepo -maxdepth 1 -mindepth 1 -type d`; do  
+    echo -e "[`basename $DIR`]" >> $REPOFILE
+    echo -e "name=`basename $DIR`" >> $REPOFILE
+    echo -e "baseurl=http://$ADDRESS:8088/osprepo/`basename $DIR`/" >> $REPOFILE
+    echo -e "enabled=1" >> $REPOFILE
+    echo -e "gpgcheck=1" >> $REPOFILE
+    echo -e "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release" >> $REPOFILE
+    echo -e "\n" >> $REPOFILE
+done;
+cp $REPOFILE /httpboot/osprepo/.
+
