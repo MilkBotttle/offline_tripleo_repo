@@ -1,0 +1,30 @@
+---
+- hosts: all
+  var_files:
+    - config.yaml
+  tasks:
+    - name: Ensure install yum-utils
+      yum:
+        name: yum-utils
+
+    - name: Download TripleO repo
+      scripts: scripts/download_repo.sh
+
+    - name: Install TripleO repo
+      yum:
+        name: /tmp/tripleo-repo.rpm
+    
+    - name: Enable TripleO repo
+      shell: > 
+        sudo -E tripleo-repos -b "{{ openstack_branch_version }}"
+        current ceph
+    
+    - name: Create folder "{{ local_repo_folder | default('/root/tripleo_repo') }}"
+      file:
+        path: "{{ local_repo_folder | default('/root/tripleo_repo') }}"
+        state: directory
+        mode: 0755
+
+    - name: Download pkgs
+      shell: >
+        reposync -l -n -p "{{ local_repo_folder | default('/root/tripleo_repo') }}"

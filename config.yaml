@@ -1,0 +1,10 @@
+---
+# OpenStack version allow: Pike, Queen, Ocata. Default: Pike
+openstack_branch_version:
+# The folder to store download pkgs. Default: /root/tripleo_repo
+local_repo_folder:
+# Create the http_service for remote host use. Default: False
+create_http_service:
+# Create the local_repo files, if enable http_service create remote_files. Default: True
+create_repo_file:
+
